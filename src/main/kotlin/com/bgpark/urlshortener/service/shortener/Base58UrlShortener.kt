@@ -1,5 +1,8 @@
 package com.bgpark.urlshortener.service.shortener
 
+import com.bgpark.urlshortener.exception.ApplicationException
+import com.bgpark.urlshortener.exception.ErrorCode
+import com.bgpark.urlshortener.exception.FieldError
 import com.bgpark.urlshortener.utils.Constants.BASE58_ALPHABET
 import com.bgpark.urlshortener.utils.Constants.BASE58_SIZE
 import org.springframework.stereotype.Component
@@ -56,17 +59,17 @@ class Base58UrlShortener: UrlShortener {
 
     private fun validateId(id: Long) {
         if (id < 0) {
-            throw IllegalArgumentException("Negative values are not supported")
+            throw ApplicationException(ErrorCode.NEGATIVE_VALUE_NOT_SUPPORTED, FieldError(field = "id", value = id))
         }
     }
 
     private fun validateHash(hash: String) {
         if (hash.isBlank()) {
-            throw IllegalArgumentException("Input string is empty or contains only whitespace.")
+            throw ApplicationException(ErrorCode.EMPTY_OR_WHITESPACE_INPUT, FieldError(field = "hash", value = hash))
         }
 
         if (containsInvalidCharacters(hash)) {
-            throw IllegalArgumentException("Input string contains invalid characters.")
+            throw ApplicationException(ErrorCode.INVALID_CHARACTERS_IN_INPUT, FieldError(field = "hash", value = hash))
         }
     }
 

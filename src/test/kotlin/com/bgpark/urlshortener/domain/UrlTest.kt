@@ -1,5 +1,6 @@
 package com.bgpark.urlshortener.domain
 
+import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -21,14 +22,14 @@ class UrlTest {
 
     @Test
     fun `should throw exception for empty baseUrl`() {
-        assertThrows<IllegalArgumentException> {
+        assertThrows<ApplicationException> {
             url.addShortUrl("", "abc123")
         }
     }
 
     @Test
     fun `should throw exception for empty hash`() {
-        assertThrows<IllegalArgumentException> {
+        assertThrows<ApplicationException> {
             url.addShortUrl("http://localhost:8080", "")
         }
     }

@@ -1,5 +1,6 @@
 package com.bgpark.urlshortener.service
 
+import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.service.shortener.Base58UrlShortener
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
@@ -28,7 +29,7 @@ class Base58UrlShortenerTest {
 
         @Test
         fun `encode should handle negative numbers correctly`() {
-            assertThrows<IllegalArgumentException> {
+            assertThrows<ApplicationException> {
                 shortener.encode(-1L)
             }
         }
@@ -64,7 +65,7 @@ class Base58UrlShortenerTest {
         @ParameterizedTest
         @ValueSource(strings = ["-12345", "", " ", "invalid_chars!"])
         fun `should throw exception for invalid input`(invalidInput: String) {
-            assertThrows<IllegalArgumentException> {
+            assertThrows<ApplicationException> {
                 shortener.decode(invalidInput)
             }
         }

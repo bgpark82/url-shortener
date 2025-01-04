@@ -1,5 +1,8 @@
 package com.bgpark.urlshortener.domain
 
+import com.bgpark.urlshortener.exception.ApplicationException
+import com.bgpark.urlshortener.exception.ErrorCode
+import com.bgpark.urlshortener.exception.FieldError
 import com.bgpark.urlshortener.utils.Constants.BASE_URL
 import jakarta.persistence.*
 
@@ -36,13 +39,13 @@ class Url(
 
     private fun validateUrl(baseUrl: String) {
         if (baseUrl.isBlank()) {
-            throw IllegalArgumentException("Base URL cannot be null or empty")
+            throw ApplicationException(ErrorCode.EMPTY_OR_WHITESPACE_INPUT, FieldError(field = "baseUrl", value = baseUrl))
         }
     }
 
     private fun validateHash(hash: String) {
         if (hash.isBlank()) {
-            throw IllegalArgumentException("Hash cannot be null or empty")
+            throw ApplicationException(ErrorCode.EMPTY_OR_WHITESPACE_INPUT, FieldError(field = "hash", value = hash))
         }
     }
 }
