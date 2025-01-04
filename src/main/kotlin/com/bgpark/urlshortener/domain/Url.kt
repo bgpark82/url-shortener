@@ -5,16 +5,19 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "url")
 class Url(
+    longUrl: String
+): BaseTimeEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long? = null,
+    val id: Long = 0
 
     @Column(nullable = false)
-    val longUrl: String,
+    val longUrl: String = longUrl
 
     @Column(nullable = false, unique = true)
-    val shortUrl: String,
+    var shortUrl: String = ""
+        protected set
 
 ): BaseTimeEntity() {
 }
