@@ -1,5 +1,11 @@
 package com.bgpark.urlshortener.controller
 
+import com.bgpark.urlshortener.controller.dto.UrlShortenResponse
+import com.bgpark.urlshortener.service.UrlService
+import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
+import com.bgpark.urlshortener.utils.TestConstant.SHORT_URL
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -13,16 +19,20 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @WebMvcTest(UrlController::class)
 class UrlControllerTest {
 
+    @MockkBean
+    private lateinit var urlService: UrlService
+
     @Autowired
     private lateinit var mvc: MockMvc
 
     @Test
     fun `shorten url`() {
-        val longUrl = "https://example.com/long-url"
-        val shortUrl = "http://localhost:8080/hash"
+        val longUrl = LONG_URL
+        val shortUrl = SHORT_URL
+        every { urlService.shorten(longUrl) } returns UrlShortenResponse(id = 1L, longUrl = longUrl, shortUrl = shortUrl)
 
         shortenUrl(
-            status = status().isOk,
+            status = status().isCreated,
             request = """{ "longUrl": "$longUrl" }""",
             response = """
                 {

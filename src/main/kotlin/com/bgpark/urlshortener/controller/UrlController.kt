@@ -2,19 +2,20 @@ package com.bgpark.urlshortener.controller
 
 import com.bgpark.urlshortener.controller.dto.UrlShortenRequest
 import com.bgpark.urlshortener.controller.dto.UrlShortenResponse
+import com.bgpark.urlshortener.service.UrlService
 import jakarta.validation.Valid
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1")
-class UrlController {
+class UrlController(
+    private val urlService: UrlService
+) {
 
     @PostMapping("/shorten")
-    fun shorten(@Valid @RequestBody request: UrlShortenRequest): ResponseEntity<Any> {
-        return ResponseEntity.ok(UrlShortenResponse(id = 1L, longUrl = request.longUrl, shortUrl = "http://localhost:8080/hash"))
+    @ResponseStatus(HttpStatus.CREATED)
+    fun shorten(@Valid @RequestBody request: UrlShortenRequest): UrlShortenResponse {
+        return urlService.shorten(request.longUrl)
     }
 }
