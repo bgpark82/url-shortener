@@ -20,12 +20,22 @@ class GlobalExceptionHandler {
         return ErrorResponse(
             errorCode = ErrorCode.INVALID_INPUT_VALUE,
             errors = e.bindingResult.fieldErrors.map {
-                ErrorResponse.FieldError(
+                FieldError(
                     reason = it.defaultMessage,
                     field = it.field,
                     value = it.rejectedValue
                 )
             },
+        )
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ApplicationException::class)
+    fun handleApplicationException(e: ApplicationException): ErrorResponse {
+        log.error(e.message)
+        return ErrorResponse(
+            errorCode = e.errorCode,
+            errors = e.fieldError?.let { listOf(it) }
         )
     }
 }
