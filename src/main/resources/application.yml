@@ -1,1 +1,29 @@
-spring.application.name: url-shortener
+spring:
+  application:
+    name: url-shortener
+
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL  # Using in-memory H2 database
+    driverClassName: org.h2.Driver  # H2 driver class
+    username: sa  # Default username
+    password:   # Default password
+  h2:
+    console:
+      enabled: true  # Enable H2 console
+      path: /h2-console  # Path for the H2 console
+  jpa:
+    hibernate:
+      ddl-auto: create  # Automatically update the database schema
+    show-sql: true  # Show SQL queries in the logs
+    properties:
+      hibernate:
+        format_sql: true  # Format SQL output in logs
