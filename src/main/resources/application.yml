@@ -27,3 +27,41 @@ spring:
     properties:
       hibernate:
         format_sql: true  # Format SQL output in logs
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 200         # Maximum number of threads for handling requests
+      min-spare: 10     # Minimum number of idle threads kept available for handling requests
+      accept-count: 400  # Number of requests that can be queued when all threads are busy
+    connection-timeout: 10000  # Timeout for establishing a connection (in milliseconds)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/url
+    username: master
+    password: master
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: HikariCP
+      maximum-pool-size: 10  # Max number of connections in the pool
+      connection-timeout: 1000
+      minimum-idle: 2         # Min number of idle connections to keep in the pool
+      idle-timeout: 30000     # Max idle time before removing a connection
+      max-lifetime: 1800000   # Max lifetime for a connection in the pool
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+#        format_sql: true
+#        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  h2:
+    console:
+      enabled: false
