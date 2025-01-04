@@ -24,4 +24,8 @@ class UrlService(
 
         return UrlShortenResponse.toDto(url)
     }
+
+    fun resolve(hash: String): String {
+        TODO("Not yet implemented")
+    }
 }
