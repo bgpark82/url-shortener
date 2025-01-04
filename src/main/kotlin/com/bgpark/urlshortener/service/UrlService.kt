@@ -2,10 +2,14 @@ package com.bgpark.urlshortener.service
 
 import com.bgpark.urlshortener.controller.dto.UrlShortenResponse
 import com.bgpark.urlshortener.domain.Url
+import com.bgpark.urlshortener.exception.ApplicationException
+import com.bgpark.urlshortener.exception.ErrorCode
+import com.bgpark.urlshortener.exception.FieldError
 import com.bgpark.urlshortener.repository.UrlRepository
 import com.bgpark.urlshortener.service.shortener.UrlShortener
 import com.bgpark.urlshortener.utils.Constants
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -25,7 +29,10 @@ class UrlService(
         return UrlShortenResponse.toDto(url)
     }
 
+    @Transactional(readOnly = true)
     fun resolve(hash: String): String {
-        TODO("Not yet implemented")
+        val id = urlShortener.decode(hash)
+        val url = urlRepository.findByIdOrNull(id)
+        return url?.longUrl ?: throw ApplicationException(ErrorCode.URL_NOT_FOUND, FieldError(field = "id", value = id))
     }
 }
