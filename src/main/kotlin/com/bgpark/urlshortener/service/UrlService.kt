@@ -6,7 +6,6 @@ import com.bgpark.urlshortener.exception.ErrorCode
 import com.bgpark.urlshortener.exception.FieldError
 import com.bgpark.urlshortener.repository.UrlRepository
 import com.bgpark.urlshortener.service.shortener.UrlShortener
-import com.bgpark.urlshortener.utils.Constants
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -19,13 +18,9 @@ class UrlService(
 ) {
 
     @Transactional
-    fun shortenUrl(longUrl: String): Url {
-        val url = urlRepository.save(Url(longUrl = longUrl))
-        val hash = urlShortener.encode(url.id)
-
-        url.addShortUrl(Constants.BASE_URL, hash) // update short url
-
-        return url
+    fun save(longUrl: String, shortUrl: String): Url {
+        val url = Url(longUrl = longUrl, shortUrl = shortUrl)
+        return urlRepository.save(url)
     }
 
     @Transactional(readOnly = true)

@@ -5,6 +5,7 @@ import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.repository.UrlRepository
 import com.bgpark.urlshortener.service.shortener.UrlShortener
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
+import com.bgpark.urlshortener.utils.TestConstant.SHORT_URL
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -25,17 +26,17 @@ class UrlServiceTest {
     private lateinit var urlService: UrlService
 
     @Nested
-    inner class ShortenUrl {
+    inner class SaveUrl {
 
         @Test
-        fun `shorten URL`() {
+        fun `save URL`() {
             val longUrl = LONG_URL
+            val shortUrl = "http://localhost:8080/123"
 
-            val response = urlService.shortenUrl(longUrl)
+            val response = urlService.save(longUrl, shortUrl)
 
-            val hash = urlShortener.encode(response.id)
             assertThat(response.longUrl).isEqualTo(longUrl)
-            assertThat(response.shortUrl).isEqualTo("http://localhost:8080/${hash}")
+            assertThat(response.shortUrl).isEqualTo(shortUrl)
         }
     }
 
@@ -44,7 +45,7 @@ class UrlServiceTest {
 
         @Test
         fun `should resolve URL when URL exists`() {
-            val response = urlService.shortenUrl(LONG_URL)
+            val response = urlService.save(LONG_URL, SHORT_URL)
 
             val result = urlService.resolve(extractHash(response))
 
