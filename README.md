@@ -40,7 +40,7 @@ This project provides a URL shortening service that converts long URLs into shor
 Run using Docker:
 
 ```shell
-docker-compose up
+make run
 ```
 
 # API Specifications
@@ -49,7 +49,6 @@ docker-compose up
 
 ```shell
 POST /api/v1/shorten
-
 ```
 
 Request Body:
@@ -62,17 +61,12 @@ Request Body:
 
 Response:
 ```json
-{
-   "id": "1",
-   "longUrl": "https://example.com/long-url",
-   "shortUrl": "http://localhost/{hash}"
-}
-
+Status: 201
 ```
 
 Status:
 
-- `200` Success: Successfully created a shortened URL.
+- `201` Create: Successfully created a shortened URL.
 - `400` Bad Request: Invalid URL input.
 
 ### 2. URL Redirection
@@ -104,7 +98,7 @@ Location: "https://example.com/long-url"
 Run tests using JUnit 5:
 
 ```shell
-./gradlew test
+make test
 ```
 
 # High-Level Design
