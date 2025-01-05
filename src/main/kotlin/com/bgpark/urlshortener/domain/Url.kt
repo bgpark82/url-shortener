@@ -9,19 +9,27 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "url")
 class Url(
-    longUrl: String
+    id: Long,
+    longUrl: String,
+    shortUrl: String,
 ): BaseTimeEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0L
+    val id: Long = id
 
     @Column(nullable = false)
     val longUrl: String = longUrl
 
     @Column(nullable = false, unique = true)
-    var shortUrl: String = ""
+    var shortUrl: String = shortUrl
         protected set
+
+    constructor(longUrl: String): this(
+        id = 0L,
+        longUrl = longUrl,
+        shortUrl = ""
+    )
 
     /**
      * Generates a shortened URL by appending the given hash to the base URL.

@@ -11,4 +11,8 @@ class UrlCacheRepository(
     fun save(key: String, value: String) {
         redisTemplate.opsForValue().set(key, value)
     }
+
+    fun findByKey(key: String): String? {
+        return redisTemplate.opsForValue().get(key)
+    }
 }
