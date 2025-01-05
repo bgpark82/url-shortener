@@ -1,4 +1,4 @@
-package com.bgpark.urlshortener.repository
+package com.bgpark.urlshortener.repository.db
 
 import com.bgpark.urlshortener.domain.Url
 import org.springframework.data.jpa.repository.JpaRepository

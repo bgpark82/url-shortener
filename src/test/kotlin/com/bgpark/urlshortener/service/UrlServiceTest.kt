@@ -2,7 +2,7 @@ package com.bgpark.urlshortener.service
 
 import com.bgpark.urlshortener.domain.Url
 import com.bgpark.urlshortener.exception.ApplicationException
-import com.bgpark.urlshortener.repository.UrlRepository
+import com.bgpark.urlshortener.repository.db.UrlRepository
 import com.bgpark.urlshortener.service.shortener.UrlShortener
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import com.bgpark.urlshortener.utils.TestConstant.SHORT_URL

@@ -1,6 +1,7 @@
 package com.bgpark.urlshortener.repository
 
 import com.bgpark.urlshortener.domain.Url
+import com.bgpark.urlshortener.repository.db.UrlRepository
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
