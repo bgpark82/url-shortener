@@ -1,6 +1,7 @@
 package com.bgpark.urlshortener.controller
 
-import com.bgpark.urlshortener.controller.dto.UrlShortenResponse
+import com.bgpark.urlshortener.repository.cache.dto.UrlCacheEntity
+import com.bgpark.urlshortener.service.UrlCacheService
 import com.bgpark.urlshortener.service.UrlService
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import com.bgpark.urlshortener.utils.TestConstant.SHORT_URL
@@ -23,6 +24,9 @@ class UrlControllerTest {
     @MockkBean
     private lateinit var urlService: UrlService
 
+    @MockkBean
+    private lateinit var urlCacheService: UrlCacheService
+
     @Autowired
     private lateinit var mvc: MockMvc
 
@@ -33,7 +37,10 @@ class UrlControllerTest {
         fun `shorten url`() {
             val longUrl = LONG_URL
             val shortUrl = SHORT_URL
-            every { urlService.shorten(longUrl) } returns UrlShortenResponse(id = 1L, longUrl = longUrl, shortUrl = shortUrl)
+            every { urlCacheService.shortenUrl(longUrl) } returns UrlCacheEntity(
+                id = 1L,
+                longUrl = longUrl,
+                shortUrl = shortUrl)
 
             shortenUrl(
                 status = status().isCreated,
