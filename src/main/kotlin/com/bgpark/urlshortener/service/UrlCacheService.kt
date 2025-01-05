@@ -11,7 +11,7 @@ class UrlCacheService(
 
     @CachePut(cacheNames = [URL_HASH_CACHE_NAME], key = "#hash")
     fun shortenUrl(hash: String, longUrl: String, shortUrl: String): String {
-        val url = urlService.save(longUrl, shortUrl)
+        val url = urlService.save(longUrl, shortUrl, hash)
         return url.longUrl
     }
 }

@@ -18,8 +18,8 @@ class UrlService(
 ) {
 
     @Transactional
-    fun save(longUrl: String, shortUrl: String): Url {
-        val url = Url(longUrl = longUrl, shortUrl = shortUrl)
+    fun save(longUrl: String, shortUrl: String, hash: String): Url {
+        val url = Url(longUrl = longUrl, shortUrl = shortUrl, hash = hash)
         return urlRepository.save(url)
     }
 

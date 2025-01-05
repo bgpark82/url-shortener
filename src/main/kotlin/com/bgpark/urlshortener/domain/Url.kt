@@ -7,33 +7,38 @@ import com.bgpark.urlshortener.utils.Constants.BASE_URL
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "url")
+@Table(
+    name = "url",
+    indexes = [Index(name = "idx_hash", columnList = "hash")] // add index to hash column explicitly
+)
 class Url(
-    id: Long,
-    longUrl: String,
-    shortUrl: String,
-): BaseTimeEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = id
+    val id: Long,
 
     @Column(nullable = false)
-    val longUrl: String = longUrl
+    val longUrl: String,
 
     @Column(nullable = false, unique = true)
-    var shortUrl: String = shortUrl
-        protected set
+    val shortUrl: String,
+
+    @Column(nullable = false, unique = true)
+    val hash: String,
+
+): BaseTimeEntity() {
 
     constructor(longUrl: String): this(
         id = 0L,
         longUrl = longUrl,
-        shortUrl = ""
+        shortUrl = "",
+        hash = ""
     )
 
-    constructor(longUrl: String, shortUrl: String): this(
+    constructor(longUrl: String, shortUrl: String, hash: String): this(
         id = 0L,
         longUrl = longUrl,
-        shortUrl = shortUrl
+        shortUrl = shortUrl,
+        hash = hash
     )
 }
