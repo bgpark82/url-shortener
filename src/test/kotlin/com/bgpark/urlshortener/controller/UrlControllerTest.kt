@@ -111,7 +111,7 @@ class UrlControllerTest {
         @Test
         fun `resolve url`() {
             val hash = "123"
-            every { urlCacheService.resolveUrl(hash) } returns LONG_URL
+            every { urlCacheService.resolveUrlLocalCache(hash) } returns LONG_URL
 
             mvc.perform(get("/$hash"))
                 .andExpect(status().isMovedPermanently)

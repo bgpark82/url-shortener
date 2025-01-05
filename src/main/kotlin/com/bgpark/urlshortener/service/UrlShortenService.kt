@@ -21,7 +21,7 @@ class UrlShortenService(
         val id = urlCacheRepository.increment(getCounterKey()) ?: throw ApplicationException(ErrorCode.URL_NOT_FOUND)
         val hash = urlShortener.encode(id)
         val shortUrl = createShortUrl(BASE_URL, hash)
-        urlCacheService.shortenUrl(hash, longUrl, shortUrl)
+        urlCacheService.shortenUrlLocalCache(hash, longUrl, shortUrl)
     }
 
     fun createShortUrl(baseUrl: String, hash: String): String {

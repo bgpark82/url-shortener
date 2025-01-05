@@ -23,7 +23,7 @@ class UrlController(
 
     @GetMapping("/{hash}")
     fun resolve(@PathVariable("hash") hash: String): ResponseEntity<Void> {
-        val url = urlCacheService.resolveUrl(hash)
+        val url = urlCacheService.resolveUrlLocalCache(hash)
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
             .header(HttpHeaders.LOCATION, url)
             .build()
