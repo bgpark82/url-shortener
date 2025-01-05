@@ -1,6 +1,6 @@
 package com.bgpark.urlshortener.service
 
-import com.bgpark.urlshortener.controller.dto.UrlShortenResponse
+import com.bgpark.urlshortener.domain.Url
 import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.repository.UrlRepository
 import com.bgpark.urlshortener.service.shortener.UrlShortener
@@ -60,6 +60,6 @@ class UrlServiceTest {
             }
         }
 
-        private fun extractHash(response: UrlShortenResponse) = response.shortUrl.split("/").last()
+        private fun extractHash(url: Url) = url.shortUrl.split("/").last()
     }
 }

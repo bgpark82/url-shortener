@@ -1,6 +1,5 @@
 package com.bgpark.urlshortener.service
 
-import com.bgpark.urlshortener.controller.dto.UrlShortenResponse
 import com.bgpark.urlshortener.domain.Url
 import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.exception.ErrorCode
@@ -20,13 +19,13 @@ class UrlService(
 ) {
 
     @Transactional
-    fun shorten(longUrl: String): UrlShortenResponse {
+    fun shorten(longUrl: String): Url {
         val url = urlRepository.save(Url(longUrl = longUrl))
         val hash = urlShortener.encode(url.id)
 
         url.addShortUrl(Constants.BASE_URL, hash) // update short url
 
-        return UrlShortenResponse.toDto(url)
+        return url
     }
 
     @Transactional(readOnly = true)
