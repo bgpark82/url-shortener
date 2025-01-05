@@ -12,7 +12,7 @@ class UrlCacheService(
 ) {
 
     fun shortenUrl(longUrl: String): UrlCacheEntity {
-        val url = urlService.shorten(longUrl)
+        val url = urlService.shortenUrl(longUrl)
         val hash = url.shortUrl.split("/").last()
         val key = getUrlShortenHashKey(hash)
 

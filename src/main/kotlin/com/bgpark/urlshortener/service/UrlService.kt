@@ -19,7 +19,7 @@ class UrlService(
 ) {
 
     @Transactional
-    fun shorten(longUrl: String): Url {
+    fun shortenUrl(longUrl: String): Url {
         val url = urlRepository.save(Url(longUrl = longUrl))
         val hash = urlShortener.encode(url.id)
 

@@ -31,7 +31,7 @@ class UrlServiceTest {
         fun `shorten URL`() {
             val longUrl = LONG_URL
 
-            val response = urlService.shorten(longUrl)
+            val response = urlService.shortenUrl(longUrl)
 
             val hash = urlShortener.encode(response.id)
             assertThat(response.longUrl).isEqualTo(longUrl)
@@ -44,7 +44,7 @@ class UrlServiceTest {
 
         @Test
         fun `should resolve URL when URL exists`() {
-            val response = urlService.shorten(LONG_URL)
+            val response = urlService.shortenUrl(LONG_URL)
 
             val result = urlService.resolve(extractHash(response))
 
