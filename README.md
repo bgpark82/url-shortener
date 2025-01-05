@@ -90,13 +90,14 @@ Location: "https://example.com/long-url"
 
 # Database Schema
 
-| Field Name | Type | Description |
-| --- | --- | --- |
-| id | SERIAL | Primary key |
-| long_url | VARCHAR | Original URL |
-| short_url | VARCHAR | Shortened URL |
-| createdDate | TIMESTAMP | Creation date |
-| modifiedDate | TIMESTAMP | Modification date |
+| Field Name   | Type | Description        |
+|--------------| --- |--------------------|
+| id           | SERIAL | Primary key        |
+| long_url     | VARCHAR | Original URL       |
+| short_url    | VARCHAR | Shortened URL      |
+| hash         | VARCHAR | Hash for short URL |
+| createdDate  | TIMESTAMP | Creation date      |
+| modifiedDate | TIMESTAMP | Modification date  |
 
 # Testing
 
