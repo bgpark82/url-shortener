@@ -1,23 +1,17 @@
 package com.bgpark.urlshortener.service
 
-import com.bgpark.urlshortener.repository.cache.UrlCacheRepository
-import com.bgpark.urlshortener.repository.cache.dto.UrlCacheEntity
-import com.bgpark.urlshortener.utils.UrlRedisUtils.getUrlShortenHashKey
+import com.bgpark.urlshortener.utils.UrlRedisUtils.URL_HASH_CACHE_NAME
+import org.springframework.cache.annotation.CachePut
 import org.springframework.stereotype.Service
 
 @Service
 class UrlCacheService(
     private val urlService: UrlService,
-    private val urlCacheRepository: UrlCacheRepository
 ) {
 
-    fun shortenUrl(longUrl: String): UrlCacheEntity {
-        val url = urlService.shortenUrl(longUrl)
-        val hash = url.shortUrl.split("/").last()
-        val key = getUrlShortenHashKey(hash)
-
-        urlCacheRepository.save(key, longUrl)
-
-        return UrlCacheEntity(url)
+    @CachePut(cacheNames = [URL_HASH_CACHE_NAME], key = "#hash")
+    fun shortenUrl(hash: String, longUrl: String, shortUrl: String): String {
+        val url = urlService.save(longUrl, shortUrl)
+        return url.longUrl
     }
 }

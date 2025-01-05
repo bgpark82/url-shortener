@@ -6,7 +6,6 @@ import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import com.bgpark.urlshortener.utils.UrlRedisUtils.getUrlShortenHashKey
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
-import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -30,12 +29,11 @@ class UrlCacheServiceTest {
         val shortUrl = "http://localhost:8080/abc123"
         val key = getUrlShortenHashKey("abc123")
 
-        every { urlService.shortenUrl(longUrl) } returns Url(id = 1L, longUrl = longUrl, shortUrl = shortUrl)
+        every { urlService.save(longUrl, shortUrl) } returns Url(id = 1L, longUrl = longUrl, shortUrl = shortUrl)
 
-        val result = urlCacheService.shortenUrl(longUrl)
+        val result = urlCacheService.shortenUrl("abc123", longUrl, shortUrl)
 
-        assertThat(result.longUrl).isEqualTo(longUrl)
-        assertThat(result.shortUrl).isEqualTo(shortUrl)
+        assertThat(result).isEqualTo(longUrl)
         assertThat(urlCacheRepository.findByKey(key)).isEqualTo(LONG_URL)
     }
 }
