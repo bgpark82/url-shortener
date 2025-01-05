@@ -210,7 +210,7 @@ Uses 62 combinations of uppercase letters, lowercase letters, and digits.
 
 🟢 **Hybrid Cache** 🟢
 Uses both local and remote cache.
-* Local Cache: EhCache
+* Local Cache: Caffeine
 * Remote Cache: Redis (Lettuce)
 
 - Low latency: Local cache is faster than remote.
