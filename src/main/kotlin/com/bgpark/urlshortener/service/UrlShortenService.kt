@@ -1,5 +1,6 @@
 package com.bgpark.urlshortener.service
 
+import com.bgpark.urlshortener.dto.UrlShortenDto
 import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.exception.ErrorCode
 import com.bgpark.urlshortener.exception.FieldError
@@ -21,7 +22,11 @@ class UrlShortenService(
         val id = urlCacheRepository.increment(getCounterKey()) ?: throw ApplicationException(ErrorCode.URL_NOT_FOUND)
         val hash = urlShortener.encode(id)
         val shortUrl = createShortUrl(BASE_URL, hash)
-        urlCacheService.shortenUrlLocalCache(hash, longUrl, shortUrl)
+        urlCacheService.shortenUrlLocalCache(UrlShortenDto(
+            shortUrl = shortUrl,
+            longUrl = longUrl,
+            hash = hash,
+        ))
     }
 
     fun createShortUrl(baseUrl: String, hash: String): String {
