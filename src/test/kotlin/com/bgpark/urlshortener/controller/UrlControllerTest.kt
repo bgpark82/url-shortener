@@ -5,7 +5,9 @@ import com.bgpark.urlshortener.service.UrlShortenService
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import com.bgpark.urlshortener.utils.TestConstant.SHORT_URL
 import com.ninjasquad.springmockk.MockkBean
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,7 +37,7 @@ class UrlControllerTest {
         fun `shorten url`() {
             val longUrl = LONG_URL
             val shortUrl = SHORT_URL
-            every { urlShortenService.shortenUrl(longUrl) }
+            every { urlShortenService.shortenUrl(longUrl) } just Runs
 
             mvc.perform(
                 post("/api/v1/shorten")
