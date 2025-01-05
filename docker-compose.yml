@@ -12,9 +12,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/url
       SPRING_DATASOURCE_USERNAME: master
       SPRING_DATASOURCE_PASSWORD: master
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
     networks:
       - app-network
     depends_on:
+      - redis
       - postgresql
 
   postgresql:
@@ -31,8 +34,21 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:7.2-alpine
+    labels:
+      - "mode=standalone"
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
 volumes:
   postgresql_data:
+    driver: local
+  redis-data:
     driver: local
 
 networks:

@@ -209,10 +209,32 @@ Uses 62 combinations of uppercase letters, lowercase letters, and digits.
 
 🟢 **Hybrid Cache** 🟢
 Uses both local and remote cache.
+* Local Cache: EhCache
+* Remote Cache: Redis (Lettuce)
 
 - Low latency: Local cache is faster than remote.
 - Prevents cache stampede: Minimizes backend load when cache is missing.
 - Cache warm-up: Updates local cache during server startup.
+
+### Lettuce
+* pros:
+  * Asynchronous and non-blocking for high-concurrency environments. 
+  * Thread-safe, supports multi-threaded applications. 
+  * Built-in Redis cluster and sharding support. 
+  * Supports reactive programming. 
+* cons:
+  * More complex to use (requires understanding of async programming). 
+  * May use more memory due to async I/O model.
+
+### Jedis
+* pros:
+  * Simple and easy to use (synchronous). 
+  * Low memory overhead. 
+  * Ideal for small-scale or single-instance Redis setups. 
+* Cons:
+  * Not thread-safe by default (requires separate connections per thread). 
+  * Limited or more complex cluster and sharding support. 
+  * Synchronous, which can be less efficient for high-concurrency use cases.
 
 </details>
 
