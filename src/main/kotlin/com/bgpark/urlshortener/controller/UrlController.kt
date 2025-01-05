@@ -1,7 +1,7 @@
 package com.bgpark.urlshortener.controller
 
 import com.bgpark.urlshortener.controller.dto.UrlShortenRequest
-import com.bgpark.urlshortener.service.UrlService
+import com.bgpark.urlshortener.service.UrlCacheService
 import com.bgpark.urlshortener.service.UrlShortenService
 import jakarta.validation.Valid
 import org.springframework.http.HttpHeaders
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class UrlController(
-    private val urlService: UrlService,
-    private val urlShortenService: UrlShortenService
+    private val urlShortenService: UrlShortenService,
+    private val urlCacheService: UrlCacheService
 ) {
 
     @PostMapping("/api/v1/shorten")
@@ -22,9 +22,8 @@ class UrlController(
     }
 
     @GetMapping("/{hash}")
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     fun resolve(@PathVariable("hash") hash: String): ResponseEntity<Void> {
-        val url = urlService.resolve(hash)
+        val url = urlCacheService.resolveUrl(hash)
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
             .header(HttpHeaders.LOCATION, url)
             .build()

@@ -1,6 +1,6 @@
 package com.bgpark.urlshortener.controller
 
-import com.bgpark.urlshortener.service.UrlService
+import com.bgpark.urlshortener.service.UrlCacheService
 import com.bgpark.urlshortener.service.UrlShortenService
 import com.bgpark.urlshortener.utils.TestConstant.LONG_URL
 import com.bgpark.urlshortener.utils.TestConstant.SHORT_URL
@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 class UrlControllerTest {
 
     @MockkBean
-    private lateinit var urlService: UrlService
+    private lateinit var urlShortenService: UrlShortenService
 
     @MockkBean
-    private lateinit var urlShortenService: UrlShortenService
+    private lateinit var urlCacheService: UrlCacheService
 
     @Autowired
     private lateinit var mvc: MockMvc
@@ -111,7 +111,7 @@ class UrlControllerTest {
         @Test
         fun `resolve url`() {
             val hash = "123"
-            every { urlService.resolve(hash) } returns LONG_URL
+            every { urlCacheService.resolveUrl(hash) } returns LONG_URL
 
             mvc.perform(get("/$hash"))
                 .andExpect(status().isMovedPermanently)
