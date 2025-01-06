@@ -6,7 +6,7 @@ class UrlShortener(HttpUser):
 
     @task
     def url_shorten(self):
-        random_number = random.randint(1000000, 2000000)
+        random_number = random.randint(1, 500000)
         hash = base58_encode(random_number)
         res = self.client.get(f"/{hash}", allow_redirects=False)
         print(f"response: {res}, hash: {hash}")
