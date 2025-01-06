@@ -36,13 +36,13 @@ class UrlControllerTest {
         @Test
         fun `shorten url`() {
             val longUrl = LONG_URL
-            val shortUrl = SHORT_URL
-            every { urlShortenService.shortenUrl(longUrl) } just Runs
+            val userId = 1L
+            every { urlShortenService.shortenUrl(longUrl, userId) } just Runs
 
             mvc.perform(
                 post("/api/v1/shorten")
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .content("""{ "longUrl": "$longUrl" }""".trimIndent()))
+                    .content("""{ "longUrl": "$longUrl", "userId": $userId }""".trimIndent()))
                 .andExpect(status().isCreated)
         }
 

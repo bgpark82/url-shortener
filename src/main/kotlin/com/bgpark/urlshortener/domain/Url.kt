@@ -1,9 +1,5 @@
 package com.bgpark.urlshortener.domain
 
-import com.bgpark.urlshortener.exception.ApplicationException
-import com.bgpark.urlshortener.exception.ErrorCode
-import com.bgpark.urlshortener.exception.FieldError
-import com.bgpark.urlshortener.utils.Constants.BASE_URL
 import jakarta.persistence.*
 
 @Entity
@@ -26,19 +22,15 @@ class Url(
     @Column(nullable = false, unique = true)
     val hash: String,
 
+    val userId: Long? = null
+
 ): BaseTimeEntity() {
 
-    constructor(longUrl: String): this(
-        id = 0L,
-        longUrl = longUrl,
-        shortUrl = "",
-        hash = ""
-    )
-
-    constructor(longUrl: String, shortUrl: String, hash: String): this(
+    constructor(longUrl: String, shortUrl: String, hash: String, userId: Long): this(
         id = 0L,
         longUrl = longUrl,
         shortUrl = shortUrl,
-        hash = hash
+        hash = hash,
+        userId = userId,
     )
 }

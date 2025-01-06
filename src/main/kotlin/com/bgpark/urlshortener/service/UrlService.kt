@@ -1,6 +1,7 @@
 package com.bgpark.urlshortener.service
 
 import com.bgpark.urlshortener.domain.Url
+import com.bgpark.urlshortener.dto.UrlShortenDto
 import com.bgpark.urlshortener.exception.ApplicationException
 import com.bgpark.urlshortener.exception.ErrorCode
 import com.bgpark.urlshortener.exception.FieldError
@@ -14,9 +15,13 @@ class UrlService(
 ) {
 
     @Transactional
-    fun save(longUrl: String, shortUrl: String, hash: String): Url {
-        val url = Url(longUrl = longUrl, shortUrl = shortUrl, hash = hash)
-        return urlRepository.save(url)
+    fun save(url: UrlShortenDto): Url {
+        return urlRepository.save(Url(
+            longUrl = url.longUrl,
+            shortUrl = url.shortUrl,
+            userId = url.userId,
+            hash = url.hash,
+        ))
     }
 
     @Transactional(readOnly = true)

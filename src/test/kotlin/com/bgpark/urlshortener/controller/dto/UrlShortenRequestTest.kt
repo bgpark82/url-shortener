@@ -19,7 +19,7 @@ class UrlShortenRequestTest {
 
     @Test
     fun `should fail validation when URL is blank`() {
-        val request = UrlShortenRequest(longUrl = "")
+        val request = UrlShortenRequest(longUrl = "", userId = 1L)
 
         val violations = validator.validate(request)
 
@@ -40,7 +40,7 @@ class UrlShortenRequestTest {
         "https://xn--bcher-kva.example"
     )
     fun `should pass validation for valid URLs`(url: String) {
-        val request = UrlShortenRequest(longUrl = url)
+        val request = UrlShortenRequest(longUrl = url, userId = 1L)
 
         val violations = validator.validate(request)
 
@@ -56,7 +56,7 @@ class UrlShortenRequestTest {
         "http://example.com /path",
     )
     fun `should fail validation for invalid URLs`(url: String) {
-        val request = UrlShortenRequest(longUrl = url)
+        val request = UrlShortenRequest(longUrl = url, userId = 1L)
 
         val violations = validator.validate(request)
 

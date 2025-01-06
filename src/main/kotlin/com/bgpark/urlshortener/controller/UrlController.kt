@@ -18,7 +18,7 @@ class UrlController(
     @PostMapping("/api/v1/shorten")
     @ResponseStatus(HttpStatus.CREATED)
     fun shorten(@Valid @RequestBody request: UrlShortenRequest) {
-        urlShortenService.shortenUrl(request.longUrl)
+        urlShortenService.shortenUrl(request.longUrl, request.userId)
     }
 
     @GetMapping("/{hash}")

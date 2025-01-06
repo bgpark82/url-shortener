@@ -7,6 +7,8 @@ data class UrlShortenRequest(
 
     @field:NotBlank(message = "URL cannot be blank")
     @field:URL(message = "Invalid URL format")
-    val longUrl: String
+    val longUrl: String,
+
+    val userId: Long
 )
 

@@ -16,16 +16,16 @@ class UrlCacheService(
 
     private val log: Logger = LoggerFactory.getLogger(UrlCacheService::class.java)
 
-    @CachePut(cacheNames = [URL_HASH_CACHE_NAME], key = "#hash", cacheManager = "localCacheManager")
+    @CachePut(cacheNames = [URL_HASH_CACHE_NAME], key = "#url.hash", cacheManager = "localCacheManager")
     fun shortenUrlLocalCache(url: UrlShortenDto): String {
         log.info("shorten url for hash in local cache, hash : ${url.hash}")
         return proxy().shortenUrlCache(url)
     }
 
-    @CachePut(cacheNames = [URL_HASH_CACHE_NAME], key = "#hash")
+    @CachePut(cacheNames = [URL_HASH_CACHE_NAME], key = "#url.hash")
     fun shortenUrlCache(url: UrlShortenDto): String {
         log.info("shorten url for hash in cache, hash : ${url.hash}")
-        val savedUrl = urlService.save(url.longUrl, url.shortUrl, url.hash)
+        val savedUrl = urlService.save(url)
         return savedUrl.longUrl
     }
 

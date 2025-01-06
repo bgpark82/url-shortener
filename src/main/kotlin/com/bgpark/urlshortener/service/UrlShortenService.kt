@@ -18,13 +18,14 @@ class UrlShortenService(
     private val urlCacheRepository: UrlCacheRepository
 ) {
 
-    fun shortenUrl(longUrl: String) {
+    fun shortenUrl(longUrl: String, userId: Long) {
         val id = urlCacheRepository.increment(getCounterKey()) ?: throw ApplicationException(ErrorCode.URL_NOT_FOUND)
         val hash = urlShortener.encode(id)
         val shortUrl = createShortUrl(BASE_URL, hash)
         urlCacheService.shortenUrlLocalCache(UrlShortenDto(
             shortUrl = shortUrl,
             longUrl = longUrl,
+            userId = userId,
             hash = hash,
         ))
     }

@@ -56,7 +56,7 @@ spring:
       max-lifetime: 1800000   # Max lifetime for a connection in the pool
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
 #        format_sql: true
@@ -71,3 +71,12 @@ spring:
       host: redis
       port: 6379
       timeout: 2000
+
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 200         # Maximum number of threads for handling requests
+      min-spare: 10     # Minimum number of idle threads kept available for handling requests
+      accept-count: 400  # Number of requests that can be queued when all threads are busy
+    connection-timeout: 10000  # Timeout for establishing a connection (in milliseconds)
