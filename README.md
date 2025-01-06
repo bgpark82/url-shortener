@@ -134,6 +134,7 @@ High-level design of future architecture
 - [ID Generator](docs/IDGenerator.md)
 - [Message Queue](docs/MessageQueue.md)
 - [Rate Limiter](docs/RateLimiter.md)
+- [Asynchronous, Non-Blocking](docs/Asynchronous.md)
 
 ## Performance Test
 Test Machine Specifications
